@@ -1,5 +1,7 @@
 package com.elangzhi.fish.model;
 
+import java.util.List;
+
 public class Room {
     private Long id;
 
@@ -8,6 +10,16 @@ public class Room {
     private String intro;
 
     private Long gameId;
+
+    private List<Person> personList;
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,7 @@
 package com.elangzhi.fish.model;
 
+import java.util.DoubleSummaryStatistics;
+
 public class Person {
     private Long id;
 
@@ -16,6 +18,26 @@ public class Person {
     private String intro;
 
     private Long gameId;
+
+    private Integer number;
+
+    private Double weight;
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
 
     public Long getId() {
         return id;

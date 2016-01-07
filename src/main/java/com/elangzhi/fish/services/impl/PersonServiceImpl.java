@@ -2,6 +2,7 @@ package com.elangzhi.fish.services.impl;
 
 import com.elangzhi.fish.dao.PersonMapper;
 import com.elangzhi.fish.model.Person;
+import com.elangzhi.fish.services.GradeService;
 import com.elangzhi.fish.services.PersonService;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Resource
     PersonMapper personMapper;
+
+    @Resource
+    GradeService gradeService;
 
     @Override
     public Integer save(Person person) {
@@ -41,11 +45,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> list(Long roomId) {
 
-        return personMapper.list(roomId);
+        List<Person> list = personMapper.list(roomId);
+
+        return list;
     }
 
     @Override
     public List<Person> listByGameId(Long gameId) {
-        return personMapper.listByGameId(gameId);
+        List<Person> list = personMapper.listByGameId(gameId);
+        for(Person person : list){
+
+        }
+        return list;
     }
 }
