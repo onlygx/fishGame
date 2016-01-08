@@ -3,10 +3,13 @@ package com.elangzhi.fish.services.impl;
 import com.elangzhi.fish.dao.GameMapper;
 import com.elangzhi.fish.model.Game;
 import com.elangzhi.fish.services.GameService;
+import com.elangzhi.fish.services.PersonService;
 import com.elangzhi.fish.services.RoomService;
+import com.elangzhi.fish.tools.UUIDFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +22,16 @@ public class GameServiceImpl implements GameService {
     GameMapper gameMapper;
 
     @Resource
-    RoomService roomService;
+    PersonService personService;
 
     @Override
-    public Integer save(Game game) {
+    public Long save(Game game) {
+        if(game == null) return null;
+        game.setId(UUIDFactory.getLongId());
+        game.setTime(new Date());
+        if(game.getParentId() == null){
+            game.setParentId(0l);
+        }
         return gameMapper.insertSelective(game);
     }
 
@@ -50,9 +59,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<Game> listChild(Long parentId) {
         List<Game> child = gameMapper.listChild(parentId);
-
         for(Game game : child){
-            game.setRoomList(roomService.list(game.getId()));
+            game.setPersonList(personService.listByGameId(parentId,game.getId()));
         }
         return child;
     }

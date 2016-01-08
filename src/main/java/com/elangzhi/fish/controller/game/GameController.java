@@ -36,31 +36,27 @@ public class GameController {
     @RequestMapping("/{id}")
     public ModelAndView show(@PathVariable Long id,HttpServletRequest request, ModelMap model){
 
-        List<Game> child = gameService.listChild(id);
-        model.put("child",child);
-        if(child != null && child.size() > 0){
-
-        }
+        model.put("obj",gameService.findById(id));
+        model.put("rooms",roomService.list(id));
+        model.put("persons",personService.listByGame(id));
 
         return new ModelAndView("game/game-show",model);
     }
 
-    @RequestMapping("/setting/{id}")
-    public ModelAndView setting(@PathVariable Long id,HttpServletRequest request, ModelMap model){
-
-        return new ModelAndView("game/game-setting",model);
+    @RequestMapping("/grade/{id}")
+    public ModelAndView showGrade(@PathVariable Long id,HttpServletRequest request, ModelMap model){
+        model.put("obj",gameService.findById(id));
+        model.put("persons",personService.listByGame(id));
+        model.put("child",gameService.listChild(id));
+        return new ModelAndView("game/game-grade",model);
     }
+
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Tip save(
-            @RequestParam(value="name", required=false) String name,
-            @RequestParam(value="intro", required=false) String intro
-    ){
-        Game game = new Game();
+    public Tip save(Game game){
         try {
-
-
+            gameService.save(game);
         }catch (Exception e){
             return new Tip(1);
         }

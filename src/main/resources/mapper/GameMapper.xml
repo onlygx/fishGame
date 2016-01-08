@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.elangzhi.fish.dao.GameMapper" >
-  <resultMap id="BaseResultMap" type="com.elangzhi.fish.model.Game" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="intro" property="intro" jdbcType="VARCHAR" />
-    <result column="zhuban" property="zhuban" jdbcType="VARCHAR" />
-    <result column="chengban" property="chengban" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.elangzhi.fish.dao.GameMapper">
+    <resultMap id="BaseResultMap" type="com.elangzhi.fish.model.Game">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="zhuban" property="zhuban" jdbcType="VARCHAR"/>
+        <result column="chengban" property="chengban" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, parent_id, `time`, `name`, intro, zhuban, chengban
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from game
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from game
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from game
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.elangzhi.fish.model.Game" >
+    <insert id="insert" parameterType="com.elangzhi.fish.model.Game">
     insert into game (id, parent_id, `time`, 
       `name`, intro, zhuban, 
       chengban)
@@ -31,80 +31,80 @@
       #{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{zhuban,jdbcType=VARCHAR}, 
       #{chengban,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.elangzhi.fish.model.Game" >
-    insert into game
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-      <if test="time != null" >
-        `time`,
-      </if>
-      <if test="name != null" >
-        `name`,
-      </if>
-      <if test="intro != null" >
-        intro,
-      </if>
-      <if test="zhuban != null" >
-        zhuban,
-      </if>
-      <if test="chengban != null" >
-        chengban,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=BIGINT},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="intro != null" >
-        #{intro,jdbcType=VARCHAR},
-      </if>
-      <if test="zhuban != null" >
-        #{zhuban,jdbcType=VARCHAR},
-      </if>
-      <if test="chengban != null" >
-        #{chengban,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.elangzhi.fish.model.Game" >
-    update game
-    <set >
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=BIGINT},
-      </if>
-      <if test="time != null" >
-        `time` = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="name != null" >
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="intro != null" >
-        intro = #{intro,jdbcType=VARCHAR},
-      </if>
-      <if test="zhuban != null" >
-        zhuban = #{zhuban,jdbcType=VARCHAR},
-      </if>
-      <if test="chengban != null" >
-        chengban = #{chengban,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.elangzhi.fish.model.Game" >
+    <insert id="insertSelective" parameterType="com.elangzhi.fish.model.Game">
+        insert into game
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="time != null">
+                `time`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="zhuban != null">
+                zhuban,
+            </if>
+            <if test="chengban != null">
+                chengban,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="zhuban != null">
+                #{zhuban,jdbcType=VARCHAR},
+            </if>
+            <if test="chengban != null">
+                #{chengban,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.elangzhi.fish.model.Game">
+        update game
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="time != null">
+                `time` = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="zhuban != null">
+                zhuban = #{zhuban,jdbcType=VARCHAR},
+            </if>
+            <if test="chengban != null">
+                chengban = #{chengban,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.elangzhi.fish.model.Game">
     update game
     set parent_id = #{parentId,jdbcType=BIGINT},
       `time` = #{time,jdbcType=TIMESTAMP},
@@ -115,7 +115,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="list" resultMap="BaseResultMap">
+    <select id="list" resultMap="BaseResultMap">
     select a.*,b.childCount
     from game a
     left join (
@@ -123,15 +123,15 @@
         from game
       group by parent_id having parent_id != 0
     ) b on a.id = b.gameId
-    where 1=1
+    where 1=1 and parent_id = 0
     order by a.time desc
   </select>
 
     <select id="listChild" resultMap="BaseResultMap">
-        select a.*
-        from game a
-        where a.parent_id = #{parentId,jdbcType=BIGINT}
-        order by a.time desc
+      select a.*
+      from game a
+      where a.`parent_id` = #{gameId,jdbcType=BIGINT}
+      order by a.`time`
     </select>
 
 </mapper>

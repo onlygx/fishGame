@@ -4,6 +4,7 @@ import com.elangzhi.fish.dao.PersonMapper;
 import com.elangzhi.fish.model.Person;
 import com.elangzhi.fish.services.GradeService;
 import com.elangzhi.fish.services.PersonService;
+import com.elangzhi.fish.tools.UUIDFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,8 +24,10 @@ public class PersonServiceImpl implements PersonService {
     GradeService gradeService;
 
     @Override
-    public Integer save(Person person) {
-        return personMapper.insertSelective(person);
+    public Long save(Person person) {
+        person.setId(UUIDFactory.getLongId());
+        personMapper.insertSelective(person);
+        return person.getId();
     }
 
     @Override
@@ -51,11 +54,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> listByGameId(Long gameId) {
-        List<Person> list = personMapper.listByGameId(gameId);
-        for(Person person : list){
+    public List<Person> listByGameId(Long gameId,Long changId) {
+        List<Person> list = personMapper.listByGameId(gameId,changId);
 
-        }
         return list;
+    }
+
+    @Override
+    public List<Person> listByGame(Long gameId) {
+        return personMapper.listByGame(gameId);
     }
 }

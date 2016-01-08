@@ -8,9 +8,9 @@ import java.util.List;
 public interface GameMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Game record);
+    Long insert(Game record);
 
-    int insertSelective(Game record);
+    Long insertSelective(Game record);
 
     Game selectByPrimaryKey(Long id);
 
@@ -20,5 +20,5 @@ public interface GameMapper {
 
     List<Game> list();
 
-    List<Game> listChild(@Param("parentId")Long parentId);
+    List<Game> listChild(@Param("gameId")Long gameId);
 }

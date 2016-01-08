@@ -4,6 +4,7 @@ import com.elangzhi.fish.dao.RoomMapper;
 import com.elangzhi.fish.model.Room;
 import com.elangzhi.fish.services.PersonService;
 import com.elangzhi.fish.services.RoomService;
+import com.elangzhi.fish.tools.UUIDFactory;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +22,10 @@ public class RoomServiceImpl implements RoomService {
     PersonService personService;
 
     @Override
-    public Integer save(Room room) {
+    public Long save(Room room) {
+
+        room.setId(UUIDFactory.getLongId());
+
         return roomMapper.insertSelective(room);
     }
 

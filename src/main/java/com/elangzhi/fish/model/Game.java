@@ -21,7 +21,25 @@ public class Game {
 
     //---------
     private String childCount;
+    private String roomName;
     private List<Room> roomList;
+    private List<Person> personList;
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
 
     public List<Room> getRoomList() {
         return roomList;

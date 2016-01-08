@@ -8,9 +8,9 @@ import java.util.List;
 public interface PersonMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Person record);
+    Long insert(Person record);
 
-    int insertSelective(Person record);
+    Long insertSelective(Person record);
 
     Person selectByPrimaryKey(Long id);
 
@@ -20,5 +20,13 @@ public interface PersonMapper {
 
     List<Person> list(@Param("roomId") Long roomId);
 
-    List<Person> listByGameId(@Param("gameId")Long gameId);
+    /**
+     * 获取比赛中所有用户的信息
+     * @param gameId 比赛Id
+     * @param changId 场次id
+     * @return
+     */
+    List<Person> listByGameId(@Param("gameId")Long gameId,@Param("changId")Long changId);
+
+    List<Person> listByGame(@Param("gameId")Long gameId);
 }

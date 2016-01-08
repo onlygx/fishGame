@@ -5,7 +5,7 @@ package com.elangzhi.fish.services;
  */
 public interface BaseService<T> {
 
-    public Integer save(T t);
+    public Long save(T t);
 
     public Integer deleteById(Long id);
 

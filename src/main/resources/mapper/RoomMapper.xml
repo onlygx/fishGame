@@ -84,8 +84,8 @@
   <select id="list" resultMap="BaseResultMap">
     select * from room
     where 1 = 1
-    <if test="parentId != null" >
-      and `parent_id` = #{parentId,jdbcType=BIGINT}
+    <if test="gameId != null" >
+      and `game_id` = #{gameId,jdbcType=BIGINT}
     </if>
   </select>
 </mapper>

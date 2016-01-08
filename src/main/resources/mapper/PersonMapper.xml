@@ -134,15 +134,34 @@
         <if test="roomId != null" >
             and a.`room_id` = #{roomId,jdbcType=BIGINT}
         </if>
+        order by type
     </select>
 
   <select id="listByGameId" resultMap="BaseResultMap">
-    select a.*
+    select a.*,b.`number`,b.`weight`
     from person a
-    where 1 = 1
+    left join grade b on a.id = b.`person_id`
+    <if test="changId != null" >
+      and b.`game_id` = #{changId,jdbcType=BIGINT}
+    </if>
+    where 1=1
     <if test="gameId != null" >
       and a.`game_id` = #{gameId,jdbcType=BIGINT}
     </if>
+
   </select>
 
+
+  <select id="listByGame" resultMap="BaseResultMap">
+    select a.*,b.`number`,b.`weight`
+    from person a
+    left join (
+      select person_id,sum(number) number,sum(weight) weight from grade group by person_id
+    ) b on a.id = b.person_id
+    where 1=1
+    <if test="gameId != null" >
+      and a.`game_id` = #{gameId,jdbcType=BIGINT}
+    </if>
+
+  </select>
 </mapper>

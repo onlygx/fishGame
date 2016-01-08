@@ -20,7 +20,7 @@ public class GradeServiceImpl implements GradeService {
     GradeMapper gradeMapper;
 
     @Override
-    public Integer save(Grade grade) {
+    public Long save(Grade grade) {
         return null;
     }
 
