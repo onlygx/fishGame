@@ -23,6 +23,16 @@ public class Person {
 
     private Double weight;
 
+    private Boolean finish = true;
+
+    public Boolean getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Boolean finish) {
+        this.finish = finish;
+    }
+
     public Integer getNumber() {
         return number;
     }

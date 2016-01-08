@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>比赛详情</title>
     <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="/static/css/datatables.min.css">
     <link rel="stylesheet" href="/static/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/icheck/skins/all.css">
@@ -23,6 +24,9 @@
 
     <script src="/static/js/jquery-1.11.3.js"></script>
     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap-datetimepicker.js"></script>
+    <script src="/static/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+
     <script src="/static/js/datatables.min.js"></script>
     <script src="/static/js/dataTables.bootstrap.min.js"></script>
     <script src="/static/js/jquery.qrcode.js"></script>
@@ -52,6 +56,43 @@
 </div>
 <div class="container">
 
+    <h3>场次管理</h3>
+    <div>
+        <button class="btn btn-info" data-toggle="modal" data-target="#gameModal">添加场次</button>
+        <a  class="btn btn-info" href="/game/grade/${obj.id}">查看成绩</a>
+    </div>
+    <div style="margin-top: 20px;">
+        <table  class="table  table-bordered"  width="100%">
+            <thead>
+            <tr>
+                <th>场次</th>
+                <th>开始时间</th>
+                <th>备注</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="item" items="${child}" varStatus="status" >
+
+                <tr>
+                    <td >${item.name}</td>
+                    <td ><fmt:formatDate value="${item.time}" type="both"/> </td>
+                    <td >${item.intro} </td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="delGame('${item.id}')">删除</a>
+
+                    </td>
+                </tr>
+
+            </c:forEach>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <h3>钓区管理</h3>
     <div>
         <button class="btn btn-info" data-toggle="modal" data-target="#roomModal">添加钓区</button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;颜色区分：
@@ -62,20 +103,24 @@
     </div>
     <div class="row">
     <c:forEach var="item" items="${rooms}" varStatus="status" >
-        <div class="col-md-4 room">
+        <div class="col-md-3 room">
             <input type="hidden" name="rooms" value="${item.id}">
-            <h2>${item.name}</h2>
+            <h2>${item.name} </h2>
+            <a style="float: right;" href="javascript:delRoom('${item.id}')">删除</a>
+            <span>${item.intro}</span>
+            <br><br>
             <c:forEach var="item2" items="${item.personList}" varStatus="status" >
 
                 <c:if test="${item2.type == 1}">
-                    <label class="label label-success">${item2.name}</label><br><br>
+                    <label class="label label-success">${item2.name}</label>
                 </c:if>
                 <c:if test="${item2.type == 2}">
-                    <label class="label label-warning">${item2.name}</label><br><br>
+                    <label class="label label-warning">${item2.name}</label>
                 </c:if>
                 <c:if test="${item2.type == 3}">
-                    <label class="label label-info">${item2.name}</label><br><br>
+                    <label class="label label-info">${item2.name}</label>
                 </c:if>
+                <br><br>
 
             </c:forEach>
         </div>
@@ -85,12 +130,12 @@
 
     </div>
     <div>
-
+        <h3>人员管理</h3>
         <div style="margin-top: 20px;margin-bottom: 20px;">
             <button class="btn btn-info" data-toggle="modal" data-target="#personModal">添加人员</button>
             <button class="btn btn-info" onclick="resetRoom()">自动分配钓区</button>
         </div>
-        <h3>所有人员</h3>
+
         <table id="tableAll" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
             <tr>
@@ -98,6 +143,7 @@
                 <th>姓名</th>
                 <th>电话</th>
                 <th>身份</th>
+                <th>备注</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -121,6 +167,7 @@
                             <label class="label label-info">参赛者</label><br><br>
                         </c:if>
                     </td>
+                    <td >${item.intro} </td>
                     <td>
                         <a href="javascript:void(0);" onclick="delPerson('${item.id}')">删除</a>
                         &nbsp;&nbsp;
@@ -136,6 +183,46 @@
 
 </div>
 
+<div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="gameModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="gameModalLabel">添加场次</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" name="parentId" value="${obj.id}">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">场次名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" placeholder="场次名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">开始时间</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control datetime" name="time" placeholder="开始时间">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">备注</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" style="height: 100px;" name="intro" placeholder="备注信息..."></textarea>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveGame()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel">
     <div class="modal-dialog" role="document">
@@ -201,10 +288,11 @@
                         <label class="col-sm-2 control-label">钓区</label>
                         <div class="col-sm-10">
                             <input type="radio" id="room0" name="roomId"  value="" checked>&nbsp;
-                            <label for="room0" >稍后分配</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label for="room0" >稍后分配</label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
                             <c:forEach var="item" items="${rooms}" varStatus="status" >
                                 <input type="radio" id="type_${item.id}"  value="${item.id}" name="roomId" >&nbsp;
                                 <label for="type_${item.id}" >${item.name}</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br>
                             </c:forEach>
                         </div>
                     </div>
@@ -245,11 +333,14 @@
     </div>
 </div>
 </body>
+
 </html>
 <script>
     (function($){
+
+
         jQuery('#erweima').qrcode({
-            text : "${obj.id}",
+            text : "<%=request.getRemoteAddr()%>,${obj.id}",
             width:230,
             height:230
         });
@@ -258,6 +349,13 @@
             checkboxClass: 'iradio_square-red',
             radioClass: 'iradio_square-red',
             increaseArea: '20%' // optional
+        });
+
+        $(".datetime").datetimepicker({
+            format: 'yyyy/mm/dd hh:ii:ss',
+            autoclose: true,
+            todayBtn: true,
+            language: "zh-CN"
         });
 
         $("#tableAll").DataTable({
@@ -276,6 +374,7 @@
             }
         });
     })(jQuery);
+
 
     function resetRoom(){
         var rooms = new Array();
@@ -310,6 +409,17 @@
 
     }
 
+    function saveGame(){
+
+        var param = tools.formParams("gameModal");
+        param["time"] = new Date(param["time"].toString());
+        tools.action("/game/save",param,function(data){
+            tools.tip(data,{1:"操作失败！"});
+            location.reload();
+        })
+
+    }
+
     function savePerson(){
 
         var param = tools.formParams("personModal");
@@ -334,4 +444,23 @@
         })
     }
 
+    function delGame(id){
+        if(!confirm("确定删除么？")){
+            return;
+        }
+        tools.action("/game/delete",{id:id},function(data){
+            tools.tip(data,{1:"操作失败！"});
+            location.reload();
+        })
+    }
+
+    function delRoom(id){
+        if(!confirm("确定删除么？")){
+            return;
+        }
+        tools.action("/room/delete",{id:id},function(data){
+            tools.tip(data,{1:"操作失败！"});
+            location.reload();
+        })
+    }
 </script>

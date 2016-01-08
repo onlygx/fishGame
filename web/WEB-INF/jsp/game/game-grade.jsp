@@ -68,6 +68,7 @@
                 <th>总尾数</th>
                 <th>总重量</th>
                 <th>身份</th>
+                <th>备注</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -95,6 +96,7 @@
                             <label class="label label-info">参赛者</label><br><br>
                         </c:if>
                     </td>
+                    <td >${item.intro} </td>
                     <td>
                         <a href="javascript:void(0);" onclick="delPerson('${item.id}')">删除</a>
 
@@ -158,14 +160,14 @@
 <script>
     (function ($) {
         jQuery('#erweima').qrcode({
-            text: "${obj.id}",
+            text : "<%=request.getRemoteAddr()%>,${obj.id}",
             width: 230,
             height: 230
         });
 
         $("#tableAll").DataTable({
+            "aLengthMenu": [[100, 200, 300, -1],[100, 200, 300, "全部"]],
             "oLanguage": {//语言设置
-                "aLengthMenu": [[100, 200, 300, -1],[100, 200, 300, "全部"]],
                 "sLengthMenu": "每页显示  _MENU_ 条记录",
                 "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
                 "oPaginate": {

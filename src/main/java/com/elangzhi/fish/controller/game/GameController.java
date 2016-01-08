@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author GaoXiang
@@ -39,7 +41,7 @@ public class GameController {
         model.put("obj",gameService.findById(id));
         model.put("rooms",roomService.list(id));
         model.put("persons",personService.listByGame(id));
-
+        model.put("child",gameService.listChild(id));
         return new ModelAndView("game/game-show",model);
     }
 
@@ -51,11 +53,23 @@ public class GameController {
         return new ModelAndView("game/game-grade",model);
     }
 
+    @RequestMapping("/down")
+    @ResponseBody
+    public Map<String,Object> showJson(@RequestParam("id") Long id){
+        Map<String,Object> back = new HashMap<>();
+        back.put("obj",gameService.findById(id));
+        back.put("persons",personService.listByGame(id));
+        back.put("child",gameService.listChild(id));
+        return back;
+    }
+
+
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Tip save(Game game){
+    public Tip save(Game game,@RequestParam("time") String time){
         try {
+            System.out.println(time);
             gameService.save(game);
         }catch (Exception e){
             return new Tip(1);

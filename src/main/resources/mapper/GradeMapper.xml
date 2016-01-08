@@ -90,4 +90,17 @@
       game_id = #{gameId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="findByPGID" resultMap="BaseResultMap">
+    select *
+    from grade
+    where 1=1
+    <if test="gameId != null" >
+     and game_id = #{gameId,jdbcType=BIGINT}
+    </if>
+    <if test="personId != null" >
+     and person_id = #{personId,jdbcType=BIGINT}
+    </if>
+
+  </select>
 </mapper>
